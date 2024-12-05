@@ -1,42 +1,67 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+@layer components {
+  /* * {
+    @apply border border-red-600
+  } */
+
+  .outer-webpage {
+    @apply flex flex-col  min-h-screen min-w-full
   }
-  to {
-    transform: rotate(360deg);
+  
+  .inner-webpage {
+    @apply flex flex-row flex-grow
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .topbar {
+    @apply bg-slate-500 px-10 py-2 text-2xl font-bold cursor-pointer
   }
-}
 
-.card {
-  padding: 2em;
-}
+  .sidebar-title {
+    @apply bg-slate-600 text-center size-fit place-self-center mb-5 mt-10 py-2 px-5 rounded-xl text-base cursor-pointer
+  }
+  
+  .sidebar {
+    @apply bg-slate-500 text-xl flex-none
+  }
 
-.read-the-docs {
-  color: #888;
+  .sidebar-item {
+    @apply py-2 pl-10 pr-5 cursor-pointer
+  }
+
+  .sidebar-item:hover {
+    @apply bg-slate-600 
+  }
+
+  .content {
+    @apply bg-slate-50 flex-grow text-slate-800 p-10
+  }
+
+  .content-title {
+    @apply card card-emphasis w-full mb-10 text-xl
+  }
+
+  .card {
+    @apply rounded-xl px-4 py-2 size-fit m-2
+  }
+
+  .card-background {
+    @apply bg-slate-100
+  }
+
+  .card-emphasis {
+    @apply bg-slate-200
+  }
+
+  .no-hover:hover {
+    @apply text-slate-50
+  }
+
+  .live-measure {
+    @apply text-xl font-bold mx-auto my-4
+  }
+
 }
