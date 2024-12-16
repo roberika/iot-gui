@@ -1,3 +1,13 @@
+# Instalasi
+
+1. Clone repositori
+``
+
+2. Install Firebase bersama SDK tambahannya
+```
+npm install firebase
+```
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

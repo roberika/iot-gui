@@ -1,21 +1,38 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
+import { initializeApp } from "firebase/app";
+
 import './App.css'
 import LiveMonitoring from './LiveMonitoring'
 import Records from './Records'
 import Settings from './Settings'
 
+const firebaseConfig = {
+  apiKey: "AIzaSyDeJS1-Ucxs8YniV-vS-TB5uDWIEaTCsFg",
+  authDomain: "dht-firebase-if51.firebaseapp.com",
+  databaseURL: "https://dht-firebase-if51-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "dht-firebase-if51",
+  storageBucket: "dht-firebase-if51.firebasestorage.app",
+  messagingSenderId: "508179112287",
+  appId: "1:508179112287:web:eb19dceb481f4bd0db16ea",
+  measurementId: "G-VP8SK1EK3L"
+};
+
+const app = initializeApp(firebaseConfig);
+
 const Pages = {
   LIVE_MONITORING: {
-    "label" : "Live Monitoring", 
-    "page" : <LiveMonitoring/>},
+    "label": "Live Monitoring",
+    "page": <LiveMonitoring app={app} />
+  },
   RECORDS: {
-    "label" : "Records", 
-    "page" : <Records/>},
+    "label": "Records",
+    "page": <Records app={app} />
+  },
   SETTINGS: {
-    "label" : "Settings", 
-    "page" : <Settings/>},
+    "label": "Settings",
+    "page": <Settings app={app} />
+  },
 }
 
 function App() {
@@ -25,7 +42,7 @@ function App() {
   return (
     <div className='outer-webpage'>
       {showTopbar ? (
-        <Topbar/>
+        <Topbar />
       ) : (
         <></>
       )}
