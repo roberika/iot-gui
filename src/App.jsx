@@ -6,6 +6,8 @@ import './App.css'
 import LiveMonitoring from './LiveMonitoring'
 import Records from './Records'
 import Settings from './Settings'
+import LiveMonitoringIcon from './assets/live-monitoring-icon.svg';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDeJS1-Ucxs8YniV-vS-TB5uDWIEaTCsFg",
@@ -23,7 +25,7 @@ const app = initializeApp(firebaseConfig);
 const Pages = {
   LIVE_MONITORING: {
     "label": "Live Monitoring",
-    "page": <LiveMonitoring app={app} />
+    "page": <LiveMonitoring app={app} />,
   },
   RECORDS: {
     "label": "Records",
@@ -48,7 +50,7 @@ function App() {
       )}
       <div className='inner-webpage'>
         <Sidebar items={Pages} onClick={(page) => setCurrentPage(page)} />
-        <div className='content'>
+        <div className='content-page'>
           {currentPage.page}
         </div>
       </div>
@@ -97,6 +99,9 @@ function SidebarItem({ item, onClick }) {
     <>
       <div className='sidebar-item' onClick={() => onClick()}>
         <p>{item.label}</p>
+      </div>
+      <div className='sidebar-item-small' onClick={() => onClick()}>
+        <p>{item.icon}</p>
       </div>
     </>
   )

@@ -15,29 +15,27 @@ function LiveMonitoring({ app }) {
             <p className='content-title'>
                 Live Sensor Monitoring
             </p>
-            <div className='flex flex-row'>
-                <div>
-                    <div className='card card-background'>
+            <div className='content'>
+                <div className='grow'>
+                    <div className='card card-background w-fit'>
                         <p>DHT Left</p>
                     </div>
                     <div className='card card-background'>
-                        <div className='flex flex-row'>
+                        <div className='live-measure'>
                             <LiveMeasure unit={Units.TEMPERATURE} value={33} />
                             <LiveMeasure unit={Units.HUMIDITY} value={33} />
                         </div>
-                        <p>Create React App does not support custom PostCSS configurations and is incompatible with many important tools in the PostCSS ecosystem, like `postcss-import`. We highly recommend using Vite, Parcel, Next.js, or Remix instead of Create React App. They provide an equivalent or better developer experience but with more flexibility, giving you more control over how Tailwind and PostCSS are configured.</p>
                     </div>
                 </div>
-                <div>
-                    <div className='card card-background'>
+                <div className='grow'>
+                    <div className='card card-background w-fit'>
                         <p>DHT Right</p>
                     </div>
                     <div className='card card-background'>
-                        <div className='flex flex-row'>
+                        <div className='live-measure'>
                             <LiveMeasure unit={Units.TEMPERATURE} value={25} />
                             <LiveMeasure unit={Units.HUMIDITY} value={25} />
                         </div>
-                        <p>Create React App does not support custom PostCSS configurations and is incompatible with many important tools in the PostCSS ecosystem, like `postcss-import`. We highly recommend using Vite, Parcel, Next.js, or Remix instead of Create React App. They provide an equivalent or better developer experience but with more flexibility, giving you more control over how Tailwind and PostCSS are configured.</p>
                     </div>
                 </div>
             </div>
@@ -51,7 +49,7 @@ function LiveMeasure({ unit, value }) {
             <p className='ml-auto my-auto'>
                 {unit == Units.TEMPERATURE ? "Temperature" : "Humidity"}
             </p>
-            <p className='card card-emphasis live-measure'>
+            <p className='live-measure-units'>
                 {value + unit}
             </p>
         </div>

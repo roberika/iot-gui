@@ -14,15 +14,13 @@ function Records({ app }) {
       <p className='content-title'>
         Measurement Records
       </p>
-      <div className='flex flex-row'>
+      <div className='content'>
         <div>
           <div className='card card-background'>
             <p>DHT Left</p>
           </div>
           <div className='card card-background'>
-            <div className='flex flex-row'>
-              <RecordsTable app={app} dhtid={DHTID_LEFT} />
-            </div>
+            <RecordsTable app={app} dhtid={DHTID_LEFT} />
           </div>
         </div>
         <div>
@@ -30,9 +28,7 @@ function Records({ app }) {
             <p>DHT Right</p>
           </div>
           <div className='card card-background'>
-            <div className='flex flex-row'>
-              <RecordsTable app={app} dhtid={DHTID_RIGHT} />
-            </div>
+            <RecordsTable app={app} dhtid={DHTID_RIGHT} />
           </div>
         </div>
       </div>
