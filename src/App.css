@@ -98,6 +98,18 @@
     @apply border-collapse
   }
 
+  .live-measure-status {
+    @apply text-2xl font-bold text-center border-2 rounded-xl px-4 py-2 my-2
+  }
+
+  .live-measure-danger {
+    @apply bg-red-200 text-red-800 border-red-500
+  }
+
+  .live-measure-safe {
+    @apply bg-green-200 text-green-800 border-green-500 
+  }
+
   .records-table table {
     @apply w-full 
   }

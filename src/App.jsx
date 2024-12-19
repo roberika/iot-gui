@@ -1,7 +1,4 @@
 import { useState } from 'react'
-
-import { initializeApp } from "firebase/app";
-
 import './App.css'
 
 import LiveMonitoring from './LiveMonitoring'
@@ -13,33 +10,21 @@ import RecordsIcon from './assets/records-icon.svg';
 import SettingsIcon from './assets/settings-icon.svg';
 
 
-const firebaseConfig = {
-	apiKey: "AIzaSyDeJS1-Ucxs8YniV-vS-TB5uDWIEaTCsFg",
-	authDomain: "dht-firebase-if51.firebaseapp.com",
-	databaseURL: "https://dht-firebase-if51-default-rtdb.asia-southeast1.firebasedatabase.app",
-	projectId: "dht-firebase-if51",
-	storageBucket: "dht-firebase-if51.firebasestorage.app",
-	messagingSenderId: "508179112287",
-	appId: "1:508179112287:web:eb19dceb481f4bd0db16ea",
-	measurementId: "G-VP8SK1EK3L"
-};
-
-const app = initializeApp(firebaseConfig);
 
 const Pages = {
 	LIVE_MONITORING: {
 		"label": "Live Monitoring",
-		"page": <LiveMonitoring app={app} />,
+		"page": <LiveMonitoring />,
 		"icon": <img src={LiveMonitoringIcon} />
 	},
 	RECORDS: {
 		"label": "Records",
-		"page": <Records app={app} />,
+		"page": <Records />,
 		"icon": <img src={RecordsIcon} />
 	},
 	SETTINGS: {
 		"label": "Settings",
-		"page": <Settings app={app} />,
+		"page": <Settings />,
 		"icon": <img src={SettingsIcon} />
 	},
 }

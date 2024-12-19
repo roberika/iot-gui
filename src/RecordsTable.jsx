@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { collection, query, where, getDocs, getFirestore, orderBy, getCountFromServer, limit, startAfter, endBefore, limitToLast } from "firebase/firestore";
+import { firestore } from './Firebase';
+import { collection, query, where, getDocs, orderBy, getCountFromServer, limit, startAfter, endBefore, limitToLast } from "firebase/firestore";
 
 import './App.css'
 
@@ -8,7 +9,7 @@ import RefreshIcon from './assets/refresh-icon.svg'
 import PrevIcon from './assets/prev-icon.svg'
 import NextIcon from './assets/next-icon.svg'
 
-function RecordsTable({ app, dhtid }) {
+function RecordsTable({ dhtid }) {
     const RECORDS_PER_PAGE = 10;
 
     const [records, setRecords] = useState(null);
@@ -16,10 +17,8 @@ function RecordsTable({ app, dhtid }) {
     const [page, setPage] = useState(0);
 
     const loadData = async (cursor = null, forward = true, page = 0) => {
-        const db = getFirestore(app);
-
         const countSnapshot = await getCountFromServer(query(
-            collection(db, "records"),
+            collection(firestore, "records"),
             where("dhtid", "==", dhtid)
         ));
         setRecordsCount(countSnapshot.data().count);
@@ -27,14 +26,14 @@ function RecordsTable({ app, dhtid }) {
         let querySnapshot;
         if (page == 0) {
             querySnapshot = await getDocs(query(
-                collection(db, "records"),
+                collection(firestore, "records"),
                 where("dhtid", "==", dhtid),
                 orderBy("timestamp", "desc"),
                 limit(RECORDS_PER_PAGE)
             ));
         } else if (forward) {
             querySnapshot = await getDocs(query(
-                collection(db, "records"),
+                collection(firestore, "records"),
                 where("dhtid", "==", dhtid),
                 orderBy("timestamp", "desc"),
                 startAfter(cursor),
@@ -42,7 +41,7 @@ function RecordsTable({ app, dhtid }) {
             ));
         } else {
             querySnapshot = await getDocs(query(
-                collection(db, "records"),
+                collection(firestore, "records"),
                 where("dhtid", "==", dhtid),
                 orderBy("timestamp", "desc"),
                 endBefore(cursor),

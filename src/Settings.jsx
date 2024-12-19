@@ -4,9 +4,8 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 import './App.css'
 
-function Settings({ app }) {
+function Settings() {
   const getThresholds = async () => {
-    const db = getDatabase(app);
     const docRef = doc(db, "thresholds", "threshold");
     const docSnap = await getDoc(docRef);
     

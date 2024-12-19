@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { getDatabase } from "firebase/database";
+import { firestore, realtime } from './Firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { onValue, ref } from 'firebase/database';
 
 import './App.css'
 
@@ -9,12 +11,78 @@ const Units = {
     HUMIDITY: "%",
 }
 
-function LiveMonitoring({ app }) {
+function LiveMonitoring() {
+    const [leftDanger, setLeftDanger] = useState(false);
+    const [rightDanger, setRightDanger] = useState(false);
+    const [leftTemperature, setLeftemperature] = useState(0);
+    const [leftHumidity, setLeftHumidity] = useState(0);
+    const [rightTemperature, setRightTemperature] = useState(0);
+    const [rightHumidity, setRightHumidity] = useState(0);
+
+    const checkDanger = async (
+        leftTemperature,
+        leftHumidity,
+        rightTemperature,
+        rightHumidity
+    ) => {
+        const thresholdRef = doc(firestore, "thresholds", "threshold");
+        const thresholdSnapshot = await getDoc(thresholdRef);
+        const threshold = thresholdSnapshot.data();
+
+        setLeftDanger(
+            (threshold.leftTemperature <= leftTemperature) && 
+            (threshold.leftHumidity <= leftHumidity)
+        );
+        setRightDanger(
+            (threshold.rightTemperature <= rightTemperature) && 
+            (threshold.rightHumidity <= rightHumidity)
+        );
+    }
+
+    const getDangerSide = () => {
+        if (leftDanger && rightDanger) {
+            return "Both"
+        }
+        if (leftDanger) {
+            return "Left"
+        }
+        if (rightDanger) {
+            return "Right"
+        }
+        return "Safe"
+    }
+
+    useEffect(() => {
+        const liveRef = ref(realtime);
+        onValue(liveRef, (snapshot) => {
+            const newVal = snapshot.val()
+            const leftTemperature = newVal.leftTemperature;
+            const leftHumidity = newVal.leftHumidity;
+            const rightTemperature = newVal.rightTemperature;
+            const rightHumidity = newVal.rightHumidity;
+            setLeftemperature(leftTemperature);
+            setLeftHumidity(leftHumidity);
+            setRightTemperature(rightTemperature);
+            setRightHumidity(rightHumidity);
+            console.log(leftTemperature, leftHumidity, rightTemperature, rightHumidity);
+            checkDanger(leftTemperature, leftHumidity, rightTemperature, rightHumidity);
+        });
+    }, [])
+
     return (
         <div className='live-monitoring'>
             <p className='content-title'>
                 Live Sensor Monitoring
             </p>
+            <div className='grow'>
+                <div className='card-unimportant card-title '>
+                    <p>Overall Status</p>
+                </div>
+                <div className={'card card-background live-measure-status ' + 
+                    ((leftDanger || rightDanger) ? "live-measure-danger" : "live-measure-safe")}>
+                    {getDangerSide()}
+                </div>
+            </div>
             <div className='md:content'>
                 <div className='grow'>
                     <div className='card-unimportant card-title'>
@@ -22,8 +90,9 @@ function LiveMonitoring({ app }) {
                     </div>
                     <div className='card card-background'>
                         <div className='live-measure-row'>
-                            <LiveMeasure unit={Units.TEMPERATURE} value={33} />
-                            <LiveMeasure unit={Units.HUMIDITY} value={33} />
+                            <LiveMonitor value={leftDanger} />
+                            <LiveMeasure unit={Units.TEMPERATURE} value={leftTemperature} />
+                            <LiveMeasure unit={Units.HUMIDITY} value={leftHumidity} />
                         </div>
                     </div>
                 </div>
@@ -33,13 +102,23 @@ function LiveMonitoring({ app }) {
                     </div>
                     <div className='card card-background'>
                         <div className='live-measure-row'>
-                            <LiveMeasure unit={Units.TEMPERATURE} value={25} />
-                            <LiveMeasure unit={Units.HUMIDITY} value={25} />
+                            <LiveMonitor value={rightDanger} />
+                            <LiveMeasure unit={Units.TEMPERATURE} value={rightTemperature} />
+                            <LiveMeasure unit={Units.HUMIDITY} value={rightHumidity} />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    )
+}
+
+function LiveMonitor({ value }) {
+    return (
+        <p className={'live-measure-status ' + 
+            (value ? "live-measure-danger" : "live-measure-safe")}>
+            {value ? "Danger" : "Safe"}
+        </p>
     )
 }
 
@@ -49,7 +128,7 @@ function LiveMeasure({ unit, value }) {
             <p className='ml-auto my-auto sm:text-xl'>
                 {unit == Units.TEMPERATURE ? "Temperature" : "Humidity"}
             </p>
-            <p className='live-measure-units'>
+            <p className='live-measure-units min-w-24'>
                 {value + unit}
             </p>
         </div>

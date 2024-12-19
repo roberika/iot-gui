@@ -1,11 +1,7 @@
-import { useEffect, useState } from 'react'
-
-import { collection, query, where, getDocs, getFirestore, orderBy, startAfter, endBefore } from "firebase/firestore";
-
 import './App.css'
 import RecordsTable from './RecordsTable';
 
-function Records({ app }) {
+function Records() {
 	const DHTID_LEFT = 0;
 	const DHTID_RIGHT = 1;
 
@@ -20,7 +16,7 @@ function Records({ app }) {
 						<p>DHT Left</p>
 					</div>
 					<div className='card card-background'>
-						<RecordsTable app={app} dhtid={DHTID_LEFT} />
+						<RecordsTable dhtid={DHTID_LEFT} />
 					</div>
 				</div>
 				<div className='grow'>
@@ -28,7 +24,7 @@ function Records({ app }) {
 						<p>DHT Right</p>
 					</div>
 					<div className='card card-background'>
-						<RecordsTable app={app} dhtid={DHTID_RIGHT} />
+						<RecordsTable dhtid={DHTID_RIGHT} />
 					</div>
 				</div>
 			</div>
