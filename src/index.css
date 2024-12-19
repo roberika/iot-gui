@@ -56,19 +56,3 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
-
-.dot {
-  height: 15px;
-  width: 15px;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.dot-online {
-  background: greenyellow;
-}
-
-.dot-offline {
-  background: red;
-}

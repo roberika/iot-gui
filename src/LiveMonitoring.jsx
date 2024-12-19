@@ -15,24 +15,24 @@ function LiveMonitoring({ app }) {
             <p className='content-title'>
                 Live Sensor Monitoring
             </p>
-            <div className='content'>
+            <div className='md:content'>
                 <div className='grow'>
-                    <div className='card card-background w-fit'>
+                    <div className='card-unimportant card-title'>
                         <p>DHT Left</p>
                     </div>
                     <div className='card card-background'>
-                        <div className='live-measure'>
+                        <div className='live-measure-row'>
                             <LiveMeasure unit={Units.TEMPERATURE} value={33} />
                             <LiveMeasure unit={Units.HUMIDITY} value={33} />
                         </div>
                     </div>
                 </div>
                 <div className='grow'>
-                    <div className='card card-background w-fit'>
+                    <div className='card-unimportant card-title'>
                         <p>DHT Right</p>
                     </div>
                     <div className='card card-background'>
-                        <div className='live-measure'>
+                        <div className='live-measure-row'>
                             <LiveMeasure unit={Units.TEMPERATURE} value={25} />
                             <LiveMeasure unit={Units.HUMIDITY} value={25} />
                         </div>
@@ -45,8 +45,8 @@ function LiveMonitoring({ app }) {
 
 function LiveMeasure({ unit, value }) {
     return (
-        <div className='grid grid-cols-2 basis-1/2'>
-            <p className='ml-auto my-auto'>
+        <div className='sm:live-measure'>
+            <p className='ml-auto my-auto sm:text-xl'>
                 {unit == Units.TEMPERATURE ? "Temperature" : "Humidity"}
             </p>
             <p className='live-measure-units'>

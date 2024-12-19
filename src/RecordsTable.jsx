@@ -4,6 +4,10 @@ import { collection, query, where, getDocs, getFirestore, orderBy, getCountFromS
 
 import './App.css'
 
+import RefreshIcon from './assets/refresh-icon.svg'
+import PrevIcon from './assets/prev-icon.svg'
+import NextIcon from './assets/next-icon.svg'
+
 function RecordsTable({ app, dhtid }) {
     const RECORDS_PER_PAGE = 10;
 
@@ -30,7 +34,7 @@ function RecordsTable({ app, dhtid }) {
             ));
         } else if (forward) {
             querySnapshot = await getDocs(query(
-                collection(db, "records"),  
+                collection(db, "records"),
                 where("dhtid", "==", dhtid),
                 orderBy("timestamp", "desc"),
                 startAfter(cursor),
@@ -49,10 +53,10 @@ function RecordsTable({ app, dhtid }) {
     }
 
     const nextPage = () => {
-        loadData(records.docs[records.docs.length-1], true, page + 1);
+        loadData(records.docs[records.docs.length - 1], true, page + 1);
         setPage(page + 1);
     }
-    
+
     const prevPage = () => {
         loadData(records.docs[0], false, page - 1);
         setPage(page - 1);
@@ -80,7 +84,7 @@ function RecordsTable({ app, dhtid }) {
             <table>
                 <thead>
                     <tr>
-                        <th>No.</th>
+                        <th className='hidden sm:table-cell'>No.</th>
                         <th>Waktu Pencatatan</th>
                         <th>Suhu</th>
                         <th>Kelembapan</th>
@@ -89,7 +93,7 @@ function RecordsTable({ app, dhtid }) {
                 <tbody>
                     {getRecords().map((record, index) => {
                         return <tr key={index}>
-                            <td>{index + (page * RECORDS_PER_PAGE) + 1}</td>
+                            <td className='hidden sm:table-cell'>{index + (page * RECORDS_PER_PAGE) + 1}</td>
                             <td>{record.timestamp.toDate().toLocaleDateString("en-GB", timestampOptions)}</td>
                             <td>{record.temperature}</td>
                             <td>{record.humidity}</td>
@@ -97,26 +101,24 @@ function RecordsTable({ app, dhtid }) {
                     })}
                 </tbody>
             </table>
-            <div>
-                <div>
-                    <button type='button' onClick={() => loadData(null, false)}>Refresh</button>
-                    <div>
-                        {`Jumlah data: ${recordsCount}`}
-                    </div>
+            <div className='flex px-4 pt-2'>
+                <div className='flex-shrink pr-4 py-2 hidden sm:block'>
+                    {`Jumlah data: ${recordsCount}`}
                 </div>
-                <div>
-                    {page > 0 ? (
-                        <button type='button' onClick={prevPage}>Prev</button>
-                    ) : (
-                        <button type='button' disabled>Prev</button>
-                    )}
+                <button className='flex-grow' type='button' onClick={() => loadData(null, false)}>
+                    <img src={RefreshIcon} />
+                </button>
+                {page > 0 ? (
+                    <button type='button' onClick={prevPage}><img src={PrevIcon} /></button>
+                ) : (
+                    <button type='button' disabled><img className='invisible' src={PrevIcon} /></button>
+                )}
 
-                    {(page + 1) * RECORDS_PER_PAGE < recordsCount ? (
-                        <button type='button' onClick={nextPage}>Next</button>
-                    ) : (
-                        <button type='button' disabled>Next</button>
-                    )}
-                </div>
+                {(page + 1) * RECORDS_PER_PAGE < recordsCount ? (
+                    <button type='button' onClick={nextPage}><img src={NextIcon} /></button>
+                ) : (
+                    <button type='button' disabled><img className='invisible' src={NextIcon} /></button>
+                )}
             </div>
         </div>
     )
