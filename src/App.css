@@ -23,7 +23,7 @@
   } */
 
   .outer-webpage {
-    @apply flex flex-col  min-h-screen min-w-full
+    @apply flex flex-col  min-h-screen
   }
   
   .inner-webpage {
@@ -59,7 +59,7 @@
   }
 
   .content-title {
-    @apply card card-emphasis sm:mb-10 bg-slate-200 
+    @apply card card-emphasis bg-slate-200 
   }
 
   .card {
@@ -99,7 +99,7 @@
   }
 
   .live-measure-status {
-    @apply text-2xl font-bold text-center border-2 rounded-xl px-4 py-2 my-2
+    @apply text-2xl font-bold text-center border-2 rounded-xl px-4 py-2 my-2 grow
   }
 
   .live-measure-danger {
@@ -122,6 +122,10 @@
     @apply border-y-2 
   }
 
+  .records-table-date {
+    @apply bg-transparent text-center text-xl
+  }
+
   .records-table-button {
     @apply px-2
   }
@@ -131,7 +135,11 @@
   }
 
   .threshold-units {
-    @apply card card-emphasis mx-auto lg:my-4 pe-4 bg-slate-200 
+    @apply card card-emphasis lg:my-4 bg-slate-200 
+  }
+
+  ::-webkit-calendar-picker-indicator {
+    @apply invert
   }
 
   input[type=number].threshold-units,
@@ -139,4 +147,5 @@
   input[type=number].threshold-units::-webkit-outer-spin-button { 
     @apply appearance-none
   }
+  
 }

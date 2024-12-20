@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { firestore } from './Firebase';
-import { collection, query, where, getDocs, orderBy, getCountFromServer, limit, startAfter, endBefore, limitToLast } from "firebase/firestore";
+import { collection, query, where, getDocs, orderBy, getCountFromServer, limit, startAfter, endBefore, limitToLast, startAt, endAt } from "firebase/firestore";
 
 import './App.css'
 
@@ -12,14 +12,29 @@ import NextIcon from './assets/next-icon.svg'
 function RecordsTable({ dhtid }) {
     const RECORDS_PER_PAGE = 10;
 
+    const getToday = () => {
+        const today = new Date();
+        return today.toISOString().slice(0, 10);
+    }
+
+    const getYesterday = () => {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        return yesterday.toISOString().slice(0, 10);
+    }
+
     const [records, setRecords] = useState(null);
     const [recordsCount, setRecordsCount] = useState(0);
     const [page, setPage] = useState(0);
+    const [startDate, setStartDate] = useState(getYesterday())
+    const [endDate, setEndDate] = useState(getToday())
 
     const loadData = async (cursor = null, forward = true, page = 0) => {
         const countSnapshot = await getCountFromServer(query(
             collection(firestore, "records"),
-            where("dhtid", "==", dhtid)
+            where("dhtid", "==", dhtid),
+            where("timestamp", ">=", getSeconds(startDate, false)),
+            where("timestamp", "<=", getSeconds(endDate, true)),
         ));
         setRecordsCount(countSnapshot.data().count);
 
@@ -28,6 +43,8 @@ function RecordsTable({ dhtid }) {
             querySnapshot = await getDocs(query(
                 collection(firestore, "records"),
                 where("dhtid", "==", dhtid),
+                where("timestamp", ">=", getSeconds(startDate, false)),
+                where("timestamp", "<=", getSeconds(endDate, true)),
                 orderBy("timestamp", "desc"),
                 limit(RECORDS_PER_PAGE)
             ));
@@ -35,6 +52,8 @@ function RecordsTable({ dhtid }) {
             querySnapshot = await getDocs(query(
                 collection(firestore, "records"),
                 where("dhtid", "==", dhtid),
+                where("timestamp", ">=", getSeconds(startDate, false)),
+                where("timestamp", "<=", getSeconds(endDate, true)),
                 orderBy("timestamp", "desc"),
                 startAfter(cursor),
                 limit(RECORDS_PER_PAGE)
@@ -43,6 +62,8 @@ function RecordsTable({ dhtid }) {
             querySnapshot = await getDocs(query(
                 collection(firestore, "records"),
                 where("dhtid", "==", dhtid),
+                where("timestamp", ">=", getSeconds(startDate, false)),
+                where("timestamp", "<=", getSeconds(endDate, true)),
                 orderBy("timestamp", "desc"),
                 endBefore(cursor),
                 limitToLast(RECORDS_PER_PAGE)
@@ -65,9 +86,14 @@ function RecordsTable({ dhtid }) {
         return !records ? [] : records.docs.map((doc, _) => doc.data())
     }
 
+    const getSeconds = (dateString, end = false) => {
+        const millis = Math.floor(Date.parse(dateString)) + (end ? 86399999 : 0);
+        return new Date(millis);
+    }
+
     useEffect(() => {
         loadData();
-    }, []);
+    }, [startDate, endDate]);
 
     const timestampOptions = {
         day: "2-digit",
@@ -80,6 +106,14 @@ function RecordsTable({ dhtid }) {
 
     return (
         <div className='records-table'>
+            <div className='card card-emphasis bg-slate-200'>
+                <div className='flex flex-col sm:flex-row'>
+                    <input value={startDate} className='records-table-date' type='date' onChange={(e) => {setStartDate(e.target.value)}}></input>
+                    <p className='grow hidden sm:block'>-</p>
+                    <hr className='bg-slate-300 h-0.5'/>
+                    <input value={endDate} className='records-table-date' type='date' onChange={(e) => {setEndDate(e.target.value)}}></input>
+                </div>
+            </div>
             <table>
                 <thead>
                     <tr>

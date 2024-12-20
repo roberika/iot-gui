@@ -110,12 +110,13 @@ function SettingsThreshold({ sensor, unit, value, onChange }) {
 
     return (
 		<div className='sm:threshold'>
-			<label htmlFor={getName()} className='mr-auto my-auto sm:text-xl col-span-1'>
+			<label htmlFor={getName()} className='mr-auto my-auto sm:text-xl smcol-span-1'>
 				{getLabel()}
 			</label>
-			<div className='flex flex-row col-span-2 gap-2 sm:gap-4 my-auto'>
-				<input type='number' step="0.1" id={getName()} name={getName()} value={value} className='threshold-units basis-5/6 grow sm:text-right' onChange={onChange} required/>
-				<p className='threshold-units basis-1/6'>
+			<div className='flex sm:col-span-2 my-auto'>
+				<input type='number' step="0.1" id={getName()} name={getName()} value={value} 
+					className='threshold-units grow w-24 sm:text-right' onChange={onChange} size={0} required/>
+				<p className='threshold-units'>
 					{unit}
 				</p>
 			</div>

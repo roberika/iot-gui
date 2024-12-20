@@ -5,7 +5,7 @@
 
 ```
 
-2. Install Tailwin
+2. Install Tailwind
 ```
     npm install -D tailwindcss postcss autoprefixer
     npx tailwindcss init -p
@@ -20,7 +20,12 @@
 
 5. Pastikan sudah terdapat indeks untuk `records`
 
-6. Jalankan secara lokal dengan Vite
+6. Install Recharts
+```
+    npm install recharts
+```
+
+7. Jalankan secara lokal dengan Vite
 ```
     npm run dev
 ```
