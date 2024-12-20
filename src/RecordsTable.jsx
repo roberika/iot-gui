@@ -104,19 +104,20 @@ function RecordsTable({ dhtid }) {
                 <div className='flex-shrink pr-4 py-2 hidden sm:block'>
                     {`Jumlah data: ${recordsCount}`}
                 </div>
-                <button className='flex-grow' type='button' onClick={() => loadData(null, false)}>
+                <button className='records-table-button' type='button' onClick={() => loadData(null, false)}>
                     <img src={RefreshIcon} />
                 </button>
+                <div className='flex-grow' />
                 {page > 0 ? (
-                    <button type='button' onClick={prevPage}><img src={PrevIcon} /></button>
+                    <button className='records-table-button' type='button' onClick={prevPage}><img src={PrevIcon} /></button>
                 ) : (
-                    <button type='button' disabled><img className='invisible' src={PrevIcon} /></button>
+                    <button className='records-table-button' type='button' disabled><img className='invisible' src={PrevIcon} /></button>
                 )}
 
                 {(page + 1) * RECORDS_PER_PAGE < recordsCount ? (
-                    <button type='button' onClick={nextPage}><img src={NextIcon} /></button>
+                    <button className='records-table-button' type='button' onClick={nextPage}><img src={NextIcon} /></button>
                 ) : (
-                    <button type='button' disabled><img className='invisible' src={NextIcon} /></button>
+                    <button className='records-table-button' type='button' disabled><img className='invisible' src={NextIcon} /></button>
                 )}
             </div>
         </div>

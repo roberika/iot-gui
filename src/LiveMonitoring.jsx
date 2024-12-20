@@ -19,7 +19,7 @@ function LiveMonitoring() {
     const [rightTemperature, setRightTemperature] = useState(0);
     const [rightHumidity, setRightHumidity] = useState(0);
 
-    const checkDanger = async (
+    const setDanger = async (
         leftTemperature,
         leftHumidity,
         rightTemperature,
@@ -64,8 +64,10 @@ function LiveMonitoring() {
             setLeftHumidity(leftHumidity);
             setRightTemperature(rightTemperature);
             setRightHumidity(rightHumidity);
-            console.log(leftTemperature, leftHumidity, rightTemperature, rightHumidity);
-            checkDanger(leftTemperature, leftHumidity, rightTemperature, rightHumidity);
+            setDanger(
+                leftTemperature, leftHumidity, 
+                rightTemperature, rightHumidity
+            );
         });
     }, [])
 

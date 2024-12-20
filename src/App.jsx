@@ -69,7 +69,7 @@ function Sidebar({ items, onClick }) {
 					<SidebarStatus status={status} />
 				</a>
 				{Object.keys(items).map((key, index) => {
-					return <SidebarItem item={items[key]} onClick={() => onClick(items[key])} />
+					return <SidebarItem key={index} item={items[key]} onClick={() => onClick(items[key])} />
 				})}
 			</div>
 		</>

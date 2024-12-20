@@ -1,11 +1,33 @@
 # Instalasi
 
 1. Clone repositori
-``
-
-2. Install Firebase bersama SDK tambahannya
 ```
-npm install firebase
+
+```
+
+2. Install Tailwin
+```
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+```
+
+3. Install SDK Firebase untuk web
+```
+    npm install firebase
+```
+
+4. Setel konfigurasi Firebase pada `Firebase.jsx`
+
+5. Pastikan sudah terdapat indeks untuk `records`
+
+6. Jalankan secara lokal dengan Vite
+```
+    npm run dev
+```
+
+0. Publikasi ke Github Pages
+```
+    npm run deploy
 ```
 
 # React + Vite

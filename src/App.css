@@ -55,11 +55,11 @@
   }
 
   .content-page {
-    @apply bg-slate-50 flex-grow text-slate-800 p-2 lg:p-10
+    @apply bg-slate-50 flex-grow text-slate-800 p-1 lg:px-10 lg:py-2
   }
 
   .content-title {
-    @apply card card-emphasis sm:mb-10 text-xl
+    @apply card card-emphasis sm:mb-10 bg-slate-200 
   }
 
   .card {
@@ -79,7 +79,7 @@
   }
 
   .card-emphasis {
-    @apply bg-slate-200
+    @apply font-bold text-xl text-center 
   }
 
   .no-hover:hover {
@@ -91,11 +91,11 @@
   }
 
   .live-measure-units {
-    @apply card card-emphasis text-xl font-bold mx-auto lg:my-4 text-center
+    @apply card card-emphasis mx-auto lg:my-4 bg-slate-200 
   }
 
   .live-measure-row {
-    @apply border-collapse
+    @apply visible
   }
 
   .live-measure-status {
@@ -122,4 +122,21 @@
     @apply border-y-2 
   }
 
+  .records-table-button {
+    @apply px-2
+  }
+
+  .threshold {
+    @apply grid grid-cols-3 gap-2
+  }
+
+  .threshold-units {
+    @apply card card-emphasis mx-auto lg:my-4 pe-4 bg-slate-200 
+  }
+
+  input[type=number].threshold-units,
+  input[type=number].threshold-units::-webkit-inner-spin-button,
+  input[type=number].threshold-units::-webkit-outer-spin-button { 
+    @apply appearance-none
+  }
 }
