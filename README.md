@@ -25,7 +25,23 @@
     npm run dev
 ```
 
-0. Publikasi ke Github Pages
+# Publikasi (Github Pages)
+
+1. Setel url aplikasi melalui `homepage` pada `package.json`
+```
+    {
+        "homepage": "https://<username>.github.io/<repository>",
+    }
+```
+
+2. Setel nama repositori melalui `base` pada `vite.config.js`
+```
+    {
+        base: "/iot-gui"
+    }
+```
+
+3. Publikasi ke Github Pages
 ```
     npm run deploy
 ```
