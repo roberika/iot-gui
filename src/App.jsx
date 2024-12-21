@@ -9,8 +9,6 @@ import LiveMonitoringIcon from './assets/live-monitoring-icon.svg';
 import RecordsIcon from './assets/records-icon.svg';
 import SettingsIcon from './assets/settings-icon.svg';
 
-
-
 const Pages = {
 	LIVE_MONITORING: {
 		"label": "Live Monitoring",

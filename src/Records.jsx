@@ -1,10 +1,11 @@
 import './App.css'
+
 import RecordsTable from './RecordsTable';
 
-function Records() {
-	const DHTID_LEFT = 0;
-	const DHTID_RIGHT = 1;
+const DHTID_LEFT = 0;
+const DHTID_RIGHT = 1;
 
+function Records() {
 	return (
 		<div className='records'>
 			<p className='content-title'>

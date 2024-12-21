@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import { firestore } from './Firebase';
-import { collection, query, where, getDocs, orderBy, getCountFromServer, limit, startAfter, endBefore, limitToLast, startAt, endAt } from "firebase/firestore";
+import { collection, query, where, getDocs, 
+    orderBy, getCountFromServer, limit, 
+    startAfter, endBefore, limitToLast} from "firebase/firestore";
 
 import './App.css'
 
@@ -9,8 +11,9 @@ import RefreshIcon from './assets/refresh-icon.svg'
 import PrevIcon from './assets/prev-icon.svg'
 import NextIcon from './assets/next-icon.svg'
 
+const RECORDS_PER_PAGE = 10;
+
 function RecordsTable({ dhtid }) {
-    const RECORDS_PER_PAGE = 10;
 
     const getToday = () => {
         const today = new Date();
