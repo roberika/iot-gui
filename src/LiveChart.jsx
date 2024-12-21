@@ -10,7 +10,7 @@ const Units = {
     TEMPERATURE: "°C",
     HUMIDITY: "%",
 }
-const RECORDS_PER_PAGE = 24;
+const RECORDS_PER_PAGE = 61;
 
 function LiveChart({ dhtid }) {
     
@@ -44,13 +44,14 @@ function LiveChart({ dhtid }) {
 
     const getData = () => {
         const data = !records ? [] : records.docs.map((doc, index) => { 
-            return {
+            if (index % 6 == 0) return {
                 "humidity":  doc.data().humidity,
                 "temperature":  doc.data().temperature,
                 "date":  getDate(doc.data().timestamp),
                 "time":  getTime(doc.data().timestamp),
             }
-        });
+            return null;
+        }).filter((e) => e != null);
         return data.reverse();
     }
 
@@ -61,9 +62,10 @@ function LiveChart({ dhtid }) {
     return (
         <ResponsiveContainer width="99%" height={200} className="mx-auto">
             <LineChart data={getData()} syncId={"dht-records"}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                margin={{ top: 5, right: 10, left: 5, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="time" />
+                <YAxis />
                 <Tooltip />
                 <Legend />
                 <Line name="Date" type="monotone" dataKey="date" stroke="#d66884" legendType='none' hide='true' />
