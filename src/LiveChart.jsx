@@ -45,6 +45,7 @@ function LiveChart({ dhtid }) {
     const getData = () => {
         const data = !records ? [] : records.docs.map((doc, index) => { 
             if (index % 6 == 0) return {
+                "dht": dhtid == 0 ? "Left" : "Right",
                 "humidity":  doc.data().humidity,
                 "temperature":  doc.data().temperature,
                 "date":  getDate(doc.data().timestamp),
@@ -65,9 +66,10 @@ function LiveChart({ dhtid }) {
                 margin={{ top: 5, right: 10, left: 5, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="time" />
-                <YAxis />
+                <YAxis width={20} />
                 <Tooltip />
                 <Legend />
+                <Line name="DHT" type="monotone" dataKey="dht" stroke="#724892" legendType='none' hide='true' />
                 <Line name="Date" type="monotone" dataKey="date" stroke="#d66884" legendType='none' hide='true' />
                 <Line name="Humidity" type="monotone" dataKey="humidity" stroke="#8884d8" unit={Units.HUMIDITY} />
                 <Line name="Temperature" type="monotone" dataKey="temperature" stroke="#82ca9d" unit={Units.TEMPERATURE} />
