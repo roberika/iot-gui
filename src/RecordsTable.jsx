@@ -86,6 +86,17 @@ function RecordsTable({ dhtid }) {
         return !records ? [] : records.docs.map((doc, _) => doc.data())
     }
 
+    const getDate = (timestamp) => {
+        return timestamp.toDate().toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+        });
+    }
+
     const getSeconds = (dateString, end = false) => {
         const millis = Math.floor(Date.parse(dateString)) + (end ? 86399999 : 0);
         return new Date(millis);
@@ -94,15 +105,6 @@ function RecordsTable({ dhtid }) {
     useEffect(() => {
         loadData();
     }, [startDate, endDate]);
-
-    const timestampOptions = {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-    }
 
     return (
         <div className='records-table'>
@@ -127,7 +129,7 @@ function RecordsTable({ dhtid }) {
                     {getRecords().map((record, index) => {
                         return <tr key={index}>
                             <td className='hidden sm:table-cell'>{index + (page * RECORDS_PER_PAGE) + 1}</td>
-                            <td>{record.timestamp.toDate().toLocaleDateString("en-GB", timestampOptions)}</td>
+                            <td>{getDate(record.timestamp)}</td>
                             <td>{record.temperature}</td>
                             <td>{record.humidity}</td>
                         </tr>
