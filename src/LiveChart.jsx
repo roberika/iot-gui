@@ -51,7 +51,6 @@ function LiveChart({ dhtid }) {
                 "time":  getTime(doc.data().timestamp),
             }
         });
-        console.log(data);
         return data.reverse();
     }
 

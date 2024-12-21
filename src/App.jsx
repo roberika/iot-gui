@@ -63,7 +63,7 @@ function Sidebar({ items, onClick }) {
 	return (
 		<>
 			<div className='sidebar'>
-				<a className='no-hover mx-auto' href='https://console.firebase.google.com/u/0/project/dht-firebase-if51/'>
+				<a className='no-hover block mx-auto' href='https://console.firebase.google.com/u/0/project/dht-firebase-if51/'>
 					<SidebarStatus status={status} />
 				</a>
 				{Object.keys(items).map((key, index) => {
