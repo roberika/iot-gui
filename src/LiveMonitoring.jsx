@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { firestore, realtime } from './Firebase';
-import { doc, getDoc} from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { onValue, ref } from 'firebase/database';
 
 import './App.css'
@@ -35,11 +35,11 @@ function LiveMonitoring() {
         const threshold = thresholdSnapshot.data();
 
         setLeftDanger(
-            (threshold.leftTemperature <= leftTemperature) && 
+            (threshold.leftTemperature <= leftTemperature) &&
             (threshold.leftHumidity <= leftHumidity)
         );
         setRightDanger(
-            (threshold.rightTemperature <= rightTemperature) && 
+            (threshold.rightTemperature <= rightTemperature) &&
             (threshold.rightHumidity <= rightHumidity)
         );
     }
@@ -70,7 +70,7 @@ function LiveMonitoring() {
             setRightTemperature(rightTemperature);
             setRightHumidity(rightHumidity);
             setDanger(
-                leftTemperature, leftHumidity, 
+                leftTemperature, leftHumidity,
                 rightTemperature, rightHumidity
             );
         });
@@ -81,8 +81,9 @@ function LiveMonitoring() {
             <p className='content-title'>
                 Live Sensor Monitoring
             </p>
-            <div className={'card card-background live-measure-status ' + 
-                ((leftDanger || rightDanger) ? "live-measure-danger" : "live-measure-safe")}>
+            <div className={'card card-background live-measure-status ' +
+                ((leftDanger || rightDanger)
+                    ? "live-measure-danger" : "live-measure-safe")}>
                 {getDangerSide()}
             </div>
             <div className='lg:content'>
@@ -94,8 +95,10 @@ function LiveMonitoring() {
                         <div className='live-measure-row'>
                             <LiveChart dhtid={DHTID_LEFT} />
                             <LiveMonitor value={leftDanger} />
-                            <LiveMeasure unit={Units.TEMPERATURE} value={leftTemperature} />
-                            <LiveMeasure unit={Units.HUMIDITY} value={leftHumidity} />
+                            <LiveMeasure unit={Units.TEMPERATURE}
+                                value={leftTemperature} />
+                            <LiveMeasure unit={Units.HUMIDITY}
+                                value={leftHumidity} />
                         </div>
                     </div>
                 </div>
@@ -107,8 +110,10 @@ function LiveMonitoring() {
                         <div className='live-measure-row'>
                             <LiveChart dhtid={DHTID_RIGHT} />
                             <LiveMonitor value={rightDanger} />
-                            <LiveMeasure unit={Units.TEMPERATURE} value={rightTemperature} />
-                            <LiveMeasure unit={Units.HUMIDITY} value={rightHumidity} />
+                            <LiveMeasure unit={Units.TEMPERATURE}
+                                value={rightTemperature} />
+                            <LiveMeasure unit={Units.HUMIDITY}
+                                value={rightHumidity} />
                         </div>
                     </div>
                 </div>
@@ -119,7 +124,7 @@ function LiveMonitoring() {
 
 function LiveMonitor({ value }) {
     return (
-        <p className={'live-measure-status ' + 
+        <p className={'live-measure-status ' +
             (value ? "live-measure-danger" : "live-measure-safe")}>
             {value ? "Danger" : "Safe"}
         </p>
@@ -130,7 +135,8 @@ function LiveMeasure({ unit, value }) {
     return (
         <div className='sm:live-measure'>
             <p className='ml-auto my-auto sm:text-xl'>
-                {unit == Units.TEMPERATURE ? "Temperature" : "Humidity"}
+                {unit == Units.TEMPERATURE
+                    ? "Temperature" : "Humidity"}
             </p>
             <p className='live-measure-units min-w-24'>
                 {value + unit}

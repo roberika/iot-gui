@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 
 import { firestore } from './Firebase';
-import { collection, query, where, getDocs, 
-    orderBy, getCountFromServer, limit, 
-    startAfter, endBefore, limitToLast} from "firebase/firestore";
+import {
+    collection, query, where, getDocs,
+    orderBy, getCountFromServer, limit,
+    startAfter, endBefore, limitToLast
+} from "firebase/firestore";
 
 import './App.css'
 
@@ -87,6 +89,20 @@ function RecordsTable({ dhtid }) {
 
     const getRecords = () => {
         return !records ? [] : records.docs.map((doc, _) => doc.data())
+        // if ( !records ) return []
+        // const humidity = records.docs
+        // .reduce(
+        //     (sum, doc) => sum + Number(doc.data().humidity), 
+        //     0 ) / RECORDS_PER_PAGE
+        // const temperature = records.docs
+        // .reduce(
+        //     (sum, doc) => sum + Number(doc.data().temperature), 
+        //     0 ) / RECORDS_PER_PAGE
+        // return [{
+        //     "timestamp": records.docs[0].data().timestamp,
+        //     "humidity": humidity,
+        //     "temperature": temperature
+        // }]
     }
 
     const getDate = (timestamp) => {
@@ -101,7 +117,8 @@ function RecordsTable({ dhtid }) {
     }
 
     const getSeconds = (dateString, end = false) => {
-        const millis = Math.floor(Date.parse(dateString)) + (end ? 86399999 : 0);
+        const millis = Math.floor(Date.parse(dateString)) +
+            (end ? 86399999 : 0);
         return new Date(millis);
     }
 
@@ -113,10 +130,16 @@ function RecordsTable({ dhtid }) {
         <div className='records-table'>
             <div className='card card-emphasis bg-slate-200'>
                 <div className='flex flex-col sm:flex-row'>
-                    <input value={startDate} className='records-table-date' type='date' onChange={(e) => {setStartDate(e.target.value)}}></input>
+                    <input value={startDate}
+                        className='records-table-date' type='date'
+                        onChange={(e) => { setStartDate(e.target.value) }}>
+                    </input>
                     <p className='grow hidden sm:block'>-</p>
-                    <hr className='bg-slate-300 h-0.5'/>
-                    <input value={endDate} className='records-table-date' type='date' onChange={(e) => {setEndDate(e.target.value)}}></input>
+                    <hr className='bg-slate-300 h-0.5' />
+                    <input value={endDate}
+                        className='records-table-date' type='date'
+                        onChange={(e) => { setEndDate(e.target.value) }}>
+                    </input>
                 </div>
             </div>
             <table>
@@ -131,7 +154,9 @@ function RecordsTable({ dhtid }) {
                 <tbody>
                     {getRecords().map((record, index) => {
                         return <tr key={index}>
-                            <td className='hidden sm:table-cell'>{index + (page * RECORDS_PER_PAGE) + 1}</td>
+                            <td className='hidden sm:table-cell'>
+                                {index + (page * RECORDS_PER_PAGE) + 1}
+                            </td>
                             <td>{getDate(record.timestamp)}</td>
                             <td>{record.temperature}</td>
                             <td>{record.humidity}</td>
@@ -143,20 +168,36 @@ function RecordsTable({ dhtid }) {
                 <div className='flex-shrink pr-4 py-2 hidden sm:block'>
                     {`Jumlah data: ${recordsCount}`}
                 </div>
-                <button className='records-table-button' type='button' onClick={() => loadData(null, false)}>
+                <button className='records-table-button' type='button'
+                    onClick={() => {
+                        loadData(null, false);
+                        setPage(0);    
+                    }}>
                     <img src={RefreshIcon} />
                 </button>
                 <div className='flex-grow' />
                 {page > 0 ? (
-                    <button className='records-table-button' type='button' onClick={prevPage}><img src={PrevIcon} /></button>
+                    <button className='records-table-button'
+                        type='button' onClick={prevPage}>
+                        <img src={PrevIcon} />
+                    </button>
                 ) : (
-                    <button className='records-table-button' type='button' disabled><img className='invisible' src={PrevIcon} /></button>
+                    <button className='records-table-button'
+                        type='button' disabled>
+                        <img className='invisible' src={PrevIcon} />
+                    </button>
                 )}
 
                 {(page + 1) * RECORDS_PER_PAGE < recordsCount ? (
-                    <button className='records-table-button' type='button' onClick={nextPage}><img src={NextIcon} /></button>
+                    <button className='records-table-button'
+                        type='button' onClick={nextPage}>
+                        <img src={NextIcon} />
+                    </button>
                 ) : (
-                    <button className='records-table-button' type='button' disabled><img className='invisible' src={NextIcon} /></button>
+                    <button className='records-table-button'
+                        type='button' disabled>
+                        <img className='invisible' src={NextIcon} />
+                    </button>
                 )}
             </div>
         </div>
