@@ -53,4 +53,4 @@
 
 # Perangkat IoT
 
-Kode untuk perangkat IoT yang dirakit dapat dilihat pada [repositori berikut](https://github.com/roberika/iot-esp). Laporan hasil pengerjaan proyek dapat dilihat pada [repositori berikut](https://github.com/roberika/iot-gui).
+Kode untuk perangkat IoT yang dirakit dapat dilihat pada [repositori berikut](https://github.com/roberika/iot-esp). Laporan hasil pengerjaan proyek dapat dilihat pada [repositori berikut](https://github.com/roberika/iot-report).
